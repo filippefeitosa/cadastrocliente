@@ -1,0 +1,23 @@
+::ng-deep .modal-content {
+  animation: fade .5s ease forwards;
+}
+
+::ng-deep .modal-footer {
+  border: none;
+}
+
+@keyframes fade {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(50px);
+    opacity: 1;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+}

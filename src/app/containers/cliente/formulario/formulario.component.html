@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="form-container mt-5" *ngIf="(clienteEncontrado || isTelaCadastrar);  else naoEncontrado">
+    <header>
+      <h5>Preencha as informações do cliente</h5>
+    </header>
+    <form [formGroup]="clienteForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <span class="error" *ngIf="getControl('nome').dirty &&  getControl('nome').hasError('required')">*Campo obrigatório</span>
+            <input type="text" id="nome" class="form-control" placeholder="Nome completo" formControlName="nome">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <span class="error" *ngIf="getControl('cpf').dirty && getControl('cpf').hasError('required')">*Campo obrigatório</span>
+            <span class="error" *ngIf="getControl('cpf').errors && getControl('cpf').errors['mask']">*Formato inválido</span>
+            <input type="text" id="cpf" class="form-control" placeholder="CPF" formControlName="cpf" mask="000.000.000-00">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="cep">CEP</label>
+            <span class="error" *ngIf="getControl('cep').dirty && getControl('cep').hasError('required')">*Campo obrigatório</span>
+            <span class="error" *ngIf="getControl('cep').errors && getControl('cep').errors['mask']">*Formato inválido</span>
+            <input type="text" id="cep" class="form-control" placeholder="CEP" formControlName="cep" mask="00000-000">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="logradouro">Logradouro</label>
+            <span class="error" *ngIf="getControl('logradouro').dirty && getControl('logradouro').hasError('required')">*Campo obrigatório</span>
+            <input type="text" id="logradouro" class="form-control" placeholder="Logradouro" formControlName="logradouro">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <span class="error" *ngIf="getControl('bairro').dirty && getControl('bairro').hasError('required')">*Campo obrigatório</span>
+            <input type="text" id="bairro" class="form-control" placeholder="Bairro" formControlName="bairro">
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="form-group">
+            <label for="localidade">Localidade</label>
+            <span class="error" *ngIf="getControl('localidade').dirty &&  getControl('localidade').hasError('required')">*Campo obrigatório</span>
+            <input type="text" id="localidade" class="form-control" placeholder="Localidade" formControlName="localidade">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="uf">UF</label>
+            <span class="error" *ngIf="getControl('uf').dirty && getControl('uf').hasError('required')">*Campo obrigatório</span>
+            <select class="form-control" id="uf" placeholder="UF" formControlName="uf">
+              <option *ngFor="let state of ufs" [value]="state.value">
+                {{ state.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="buttons-container d-flex justify-content-end mt-3">
+      <button class="btn btn-outline-secondary mr-2" (click)="goBack()">Voltar</button>
+      <button class="btn btn-primary" (click)="isTelaCadastrar ? onSalvar() : open(content)" [disabled]="!clienteForm.valid">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #naoEncontrado>
+  <div class="not-found-container mt-5">
+    <h3 class="text-center">Cliente não encontrado!</h3>
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-body">
+    <p>Tem certeza que deseja salvar essas alterações?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('cancelar')">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('salvar')">Salvar</button>
+  </div>
+</ng-template>
